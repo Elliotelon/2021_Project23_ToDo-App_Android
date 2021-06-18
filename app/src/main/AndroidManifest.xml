@@ -3,6 +3,7 @@
     package="fastcampus.aop.part5.chapter01">
 
     <application
+        android:name=".AopPart5Chapter01Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

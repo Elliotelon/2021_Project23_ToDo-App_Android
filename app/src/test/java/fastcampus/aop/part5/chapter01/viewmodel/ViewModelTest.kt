@@ -1,11 +1,13 @@
-package fastcampus.aop.part5.chapter01
+package fastcampus.aop.part5.chapter01.viewmodel
 
 import android.app.Application
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import fastcampus.aop.part5.chapter01.di.appTestModule
 import fastcampus.aop.part5.chapter01.livedata.LiveDataTestObserver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -20,11 +22,15 @@ import org.mockito.Mock
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
 
+@ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
-internal class ViewModelTest: KoinTest {
+internal abstract class ViewModelTest: KoinTest {
 
     @get:Rule
     val mockitoRule: MockitoRule = MockitoJUnit.rule()
+
+    @get:Rule
+    val instantExecutorRule = InstantTaskExecutorRule()
 
     @Mock
     private lateinit var context: Application
@@ -49,6 +55,7 @@ internal class ViewModelTest: KoinTest {
     protected fun <T> LiveData<T>.test(): LiveDataTestObserver<T> {
         val testObserver = LiveDataTestObserver<T>()
         observeForever(testObserver)
+
         return testObserver
     }
 
